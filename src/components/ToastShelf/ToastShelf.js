@@ -6,18 +6,29 @@ import { ToastContext } from "../ToastProvider";
 import styles from "./ToastShelf.module.css";
 
 function ToastShelf({ queue }) {
-  const { setToasts } = React.useContext(ToastContext);
+  const { setToasts, clearAllToasts } = React.useContext(ToastContext);
 
   const handleDismiss = (id) => {
-    const toasts = [...queue];
-    const filteredToasts = toasts.filter((item) => {
-      return item.id !== id;
-    });
-    setToasts(filteredToasts);
+    if (id === "all") {
+      setToasts([]);
+    } else {
+      const toasts = [...queue];
+      const filteredToasts = toasts.filter((item) => {
+        return item.id !== id;
+      });
+      setToasts(filteredToasts);
+    }
   };
 
+  clearAllToasts();
+
   return (
-    <ol className={styles.wrapper}>
+    <ol
+      className={styles.wrapper}
+      role='region'
+      aria-live='polite'
+      aria-label='Notification'
+    >
       {queue.map((toast) => {
         return (
           <li key={toast.id} className={styles.toastWrapper}>

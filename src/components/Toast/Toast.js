@@ -27,8 +27,16 @@ function Toast({ variant = "warning", id, handleDismiss, children }) {
       <div className={styles.iconContainer}>
         <Icon size={24} />
       </div>
-      <p className={styles.content}>{children}</p>
-      <button onClick={() => handleDismiss(id)} className={styles.closeButton}>
+      <p className={styles.content}>
+        <span className={styles.VHwrapper}>{`${variant} -`}</span>
+        {children}
+      </p>
+      <button
+        onClick={() => handleDismiss(id)}
+        className={styles.closeButton}
+        aria-label='Dismiss message'
+        aria-live='off'
+      >
         <X size={24} />
         <VisuallyHidden>Dismiss message</VisuallyHidden>
       </button>
