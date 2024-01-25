@@ -1,19 +1,34 @@
-import React from 'react';
+import React from "react";
 
-import Toast from '../Toast';
-import styles from './ToastShelf.module.css';
+import Toast from "../Toast";
+import styles from "./ToastShelf.module.css";
 
-function ToastShelf() {
+function ToastShelf({ queue, setToasts }) {
+  const handleDismiss = (id) => {
+    const toasts = [...queue];
+    const filteredToasts = toasts.filter((item) => {
+      return item.id !== id;
+    });
+    setToasts(filteredToasts);
+  };
+
   return (
     <ol className={styles.wrapper}>
-      <li className={styles.toastWrapper}>
-        <Toast variant="notice">Example notice toast</Toast>
-      </li>
-      <li className={styles.toastWrapper}>
-        <Toast variant="error">Example error toast</Toast>
-      </li>
+      {queue.map((toast) => {
+        return (
+          <li key={toast.id} className={styles.toastWrapper}>
+            <Toast
+              variant={toast.variant}
+              id={toast.id}
+              handleDismiss={handleDismiss}
+            >
+              {toast.message}
+            </Toast>
+          </li>
+        );
+      })}
     </ol>
   );
 }
 
-export default ToastShelf;
+export default React.memo(ToastShelf);
