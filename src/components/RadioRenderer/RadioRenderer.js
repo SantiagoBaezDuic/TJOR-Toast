@@ -1,6 +1,10 @@
 import React from "react";
 
-function RadioRenderer({ types, toastType: selected, setToastType }) {
+import { ToastContext } from "../ToastProvider";
+
+function RadioRenderer({ types }) {
+  const { setToastType, toastType: selected } = React.useContext(ToastContext);
+
   const handleRadio = (event) => {
     setToastType(event.target.value);
   };

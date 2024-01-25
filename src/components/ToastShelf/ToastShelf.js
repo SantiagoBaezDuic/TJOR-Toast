@@ -1,9 +1,13 @@
 import React from "react";
 
 import Toast from "../Toast";
+import { ToastContext } from "../ToastProvider";
+
 import styles from "./ToastShelf.module.css";
 
-function ToastShelf({ queue, setToasts }) {
+function ToastShelf({ queue }) {
+  const { setToasts } = React.useContext(ToastContext);
+
   const handleDismiss = (id) => {
     const toasts = [...queue];
     const filteredToasts = toasts.filter((item) => {
