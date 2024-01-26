@@ -1,13 +1,16 @@
 import React from "react";
 
-import useEscapeKey from "../../hooks/useEscapeKey";
+import useEscapeKey from "../../hooks/useKeyDown";
 
 export const ToastContext = React.createContext();
+
+const VARIANT_OPTIONS = ["notice", "warning", "success", "error"];
 
 function ToastProvider({ children }) {
   const [message, setMessage] = React.useState("");
   const [toastType, setToastType] = React.useState("notice");
   const [toasts, setToasts] = React.useState([]);
+  const [variants, setVariants] = React.useState(VARIANT_OPTIONS);
 
   const handleMessage = (event) => {
     setMessage(event.target.value);
@@ -18,17 +21,21 @@ function ToastProvider({ children }) {
     setToastType("notice");
   };
 
-  const handleFireToast = () => {
+  const createToast = (message, variant) => {
     const nextToasts = [
       ...toasts,
-      { message: message, variant: toastType, id: crypto.randomUUID() },
+      { message, variant, id: crypto.randomUUID() },
     ];
     setToasts(nextToasts);
+  };
+
+  const handleFireToast = () => {
+    createToast(message, toastType);
     clearInputs();
   };
 
   const clearAllToasts = () => {
-    useEscapeKey(() => {
+    useEscapeKey("Escape", () => {
       setToasts([]);
     });
   };
@@ -43,6 +50,7 @@ function ToastProvider({ children }) {
       toasts,
       setToasts,
       clearAllToasts,
+      variants,
     };
   }, [message, toastType, toasts]);
 

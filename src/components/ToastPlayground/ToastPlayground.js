@@ -7,10 +7,8 @@ import { ToastContext } from "../ToastProvider";
 
 import styles from "./ToastPlayground.module.css";
 
-const VARIANT_OPTIONS = ["notice", "warning", "success", "error"];
-
 function ToastPlayground() {
-  const { toasts } = React.useContext(ToastContext);
+  const { toasts, variants } = React.useContext(ToastContext);
 
   return (
     <div className={styles.wrapper}>
@@ -19,7 +17,7 @@ function ToastPlayground() {
         <h1>Toast Playground</h1>
       </header>
       <ToastShelf queue={toasts} />
-      <InputsForm options={VARIANT_OPTIONS} />
+      <InputsForm options={variants} />
     </div>
   );
 }

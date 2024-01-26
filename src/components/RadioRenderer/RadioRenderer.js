@@ -20,7 +20,6 @@ function RadioRenderer({ types }) {
               name='variant'
               checked={selected === label}
               value={label}
-              radioGroup='variant-radio'
               onChange={handleRadio}
             />
             {label}
